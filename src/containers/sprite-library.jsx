@@ -41,6 +41,7 @@ class SpriteLibrary extends React.PureComponent {
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
+                assetHost={this.props.assetHost}
             />
         );
     }
@@ -50,7 +51,8 @@ SpriteLibrary.propTypes = {
     intl: intlShape.isRequired,
     onActivateBlocksTab: PropTypes.func.isRequired,
     onRequestClose: PropTypes.func,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    assetHost: PropTypes.string
 };
 
 export default injectIntl(SpriteLibrary);

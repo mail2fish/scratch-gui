@@ -47,6 +47,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
     class ProjectSaverComponent extends React.Component {
         constructor (props) {
             super(props);
+
             bindAll(this, [
                 'getProjectThumbnail',
                 'leavePageConfirm',

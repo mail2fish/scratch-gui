@@ -31,6 +31,7 @@ import storage from './storage';
 const ProjectFetcherHOC = function (WrappedComponent) {
     class ProjectFetcherComponent extends React.Component {
         constructor (props) {
+
             super(props);
             bindAll(this, [
                 'fetchProject'
@@ -58,18 +59,22 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             if (prevProps.projectToken !== this.props.projectToken) {
                 storage.setProjectToken(this.props.projectToken);
             }
+
             if (prevProps.assetHost !== this.props.assetHost) {
                 storage.setAssetHost(this.props.assetHost);
             }
+
             if (this.props.isFetchingWithId && !prevProps.isFetchingWithId) {
                 this.fetchProject(this.props.reduxProjectId, this.props.loadingState);
             }
+
             if (this.props.isShowingProject && !prevProps.isShowingProject) {
                 this.props.onProjectUnchanged();
             }
             if (this.props.isShowingProject && (prevProps.isLoadingProject || prevProps.isCreatingNew)) {
                 this.props.onActivateTab(BLOCKS_TAB_INDEX);
             }
+
         }
         fetchProject (projectId, loadingState) {
             return storage
@@ -107,9 +112,11 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 isFetchingWithId: isFetchingWithIdProp,
                 ...componentProps
             } = this.props;
+
             return (
                 <WrappedComponent
                     fetchingProject={isFetchingWithIdProp}
+                    assetHost={this.props.assetHost}
                     {...componentProps}
                 />
             );

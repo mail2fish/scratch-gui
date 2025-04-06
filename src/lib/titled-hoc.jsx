@@ -23,6 +23,9 @@ const messages = defineMessages({
  */
 const TitledHOC = function (WrappedComponent) {
     class TitledComponent extends React.Component {
+        constructor (props) {
+            super(props);
+        }j
         componentDidMount () {
             this.handleReceivedProjectTitle(this.props.projectTitle);
         }
@@ -54,6 +57,7 @@ const TitledHOC = function (WrappedComponent) {
         render () {
             const {
                 /* eslint-disable no-unused-vars */
+                assetHost,
                 intl,
                 isAnyCreatingNewState,
                 isShowingWithoutId,
@@ -69,6 +73,7 @@ const TitledHOC = function (WrappedComponent) {
             } = this.props;
             return (
                 <WrappedComponent
+                    assetHost={assetHost}
                     {...componentProps}
                 />
             );

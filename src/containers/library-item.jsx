@@ -90,7 +90,7 @@ class LibraryItem extends React.PureComponent {
     rotateIcon () {
         const nextIconIndex = (this.state.iconIndex + 1) % this.props.icons.length;
         this.setState({iconIndex: nextIconIndex});
-    }
+    } 
     curIconMd5 () {
         const iconMd5Prop = this.props.iconMd5;
         if (this.props.icons &&
@@ -106,7 +106,7 @@ class LibraryItem extends React.PureComponent {
     render () {
         const iconMd5 = this.curIconMd5();
         const iconURL = iconMd5 ?
-            `https://cdn.assets.scratch.mit.edu/internalapi/asset/${iconMd5}/get/` :
+            `${this.props.assetHost}/${iconMd5}` :
             this.props.iconRawURL;
         return (
             <LibraryItemComponent
@@ -168,7 +168,8 @@ LibraryItem.propTypes = {
     onMouseEnter: PropTypes.func.isRequired,
     onMouseLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    showPlayButton: PropTypes.bool
+    showPlayButton: PropTypes.bool,
+    assetHost: PropTypes.string
 };
 
 export default injectIntl(LibraryItem);

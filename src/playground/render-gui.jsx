@@ -61,25 +61,17 @@ export default appTarget => {
         window.onbeforeunload = () => true;
     }
 
+
     ReactDOM.render(
-        // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
-        simulateScratchDesktop ?
-            <WrappedGui
-                canEditTitle
-                isScratchDesktop
-                showTelemetryModal
-                canSave={false}
-                onTelemetryModalCancel={handleTelemetryModalCancel}
-                onTelemetryModalOptIn={handleTelemetryModalOptIn}
-                onTelemetryModalOptOut={handleTelemetryModalOptOut}
-            /> :
-            <WrappedGui
+        // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!    
+            <WrappedGui  
                 canEditTitle
                 backpackVisible
                 showComingSoon
                 backpackHost={backpackHost}
-                canSave={false}
+                canSave={true}
                 onClickLogo={onClickLogo}
+                assetHost="http://localhost:8080/assets/scratch"
             />,
         appTarget);
 };

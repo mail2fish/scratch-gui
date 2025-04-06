@@ -22,7 +22,7 @@ import {
 const cloudManagerHOC = function (WrappedComponent) {
     class CloudManager extends React.Component {
         constructor (props) {
-            super(props);
+            super(props);            
             this.cloudProvider = null;
             bindAll(this, [
                 'handleCloudDataUpdate',

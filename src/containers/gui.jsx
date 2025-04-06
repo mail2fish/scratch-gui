@@ -55,6 +55,11 @@ const setProjectIdMetadata = projectId => {
 };
 
 class GUI extends React.Component {
+    constructor (props) {
+        super(props);
+        console.log('DbgAssetHost', props.assetHost);           
+
+    }
     componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
@@ -103,9 +108,11 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
+        console.log('GUI assetHost', assetHost);
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
+                assetHost={assetHost}
                 {...componentProps}
             >
                 {children}
@@ -115,7 +122,7 @@ class GUI extends React.Component {
 }
 
 GUI.propTypes = {
-    assetHost: PropTypes.string,
+    assetHost: PropTypes.string.isRequired,
     children: PropTypes.node,
     cloudHost: PropTypes.string,
     error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
@@ -175,7 +182,7 @@ const mapStateToProps = state => {
         ),
         telemetryModalVisible: state.scratchGui.modals.telemetryModal,
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
     };
 };
 

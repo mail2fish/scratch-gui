@@ -43,6 +43,7 @@ class CostumeLibrary extends React.PureComponent {
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelected}
                 onRequestClose={this.props.onRequestClose}
+                assetHost={this.props.assetHost}
             />
         );
     }
@@ -51,7 +52,8 @@ class CostumeLibrary extends React.PureComponent {
 CostumeLibrary.propTypes = {
     intl: intlShape.isRequired,
     onRequestClose: PropTypes.func,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    assetHost: PropTypes.string
 };
 
 export default injectIntl(CostumeLibrary);

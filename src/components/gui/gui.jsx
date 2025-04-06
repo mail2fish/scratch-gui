@@ -127,6 +127,7 @@ const GUIComponent = props => {
         theme,
         tipsLibraryVisible,
         vm,
+        assetHost,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -148,7 +149,7 @@ const GUIComponent = props => {
 
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
-
+       
         return isPlayerOnly ? (
             <StageWrapper
                 isFullScreen={isFullScreen}
@@ -189,7 +190,7 @@ const GUIComponent = props => {
                     <WebGlModal isRtl={isRtl} />
                 )}
                 {tipsLibraryVisible ? (
-                    <TipsLibrary />
+                    <TipsLibrary assetHost={assetHost}/>
                 ) : null}
                 {cardsVisible ? (
                     <Cards />
@@ -206,6 +207,7 @@ const GUIComponent = props => {
                     <CostumeLibrary
                         vm={vm}
                         onRequestClose={onRequestCloseCostumeLibrary}
+                        assetHost={assetHost}
                     />
                 ) : null}
                 {<DebugModal
@@ -216,6 +218,7 @@ const GUIComponent = props => {
                     <BackdropLibrary
                         vm={vm}
                         onRequestClose={onRequestCloseBackdropLibrary}
+                        assetHost={assetHost}
                     />
                 ) : null}
                 <MenuBar
@@ -367,6 +370,7 @@ const GUIComponent = props => {
                                 <TargetPane
                                     stageSize={stageSize}
                                     vm={vm}
+                                    assetHost={assetHost}
                                 />
                             </Box>
                         </Box>
@@ -445,7 +449,8 @@ GUIComponent.propTypes = {
     telemetryModalVisible: PropTypes.bool,
     theme: PropTypes.string,
     tipsLibraryVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    assetHost: PropTypes.string
 };
 GUIComponent.defaultProps = {
     backpackHost: null,

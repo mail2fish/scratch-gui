@@ -60,6 +60,7 @@ class ExtensionLibrary extends React.PureComponent {
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
+                assetHost={this.props.assetHost}
             />
         );
     }
@@ -70,7 +71,8 @@ ExtensionLibrary.propTypes = {
     onCategorySelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types
+    vm: PropTypes.instanceOf(VM).isRequired, // eslint-disable-line react/no-unused-prop-types
+    assetHost: PropTypes.string
 };
 
 export default injectIntl(ExtensionLibrary);

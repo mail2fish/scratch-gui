@@ -96,6 +96,7 @@ class TipsLibrary extends React.PureComponent {
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
                 withCategories
+                assetHost={this.props.assetHost}
             />
         );
     }
@@ -106,7 +107,8 @@ TipsLibrary.propTypes = {
     onActivateDeck: PropTypes.func.isRequired,
     onRequestClose: PropTypes.func,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    visible: PropTypes.bool
+    visible: PropTypes.bool,
+    assetHost: PropTypes.string
 };
 
 const mapStateToProps = state => ({

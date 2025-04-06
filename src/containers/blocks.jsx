@@ -596,6 +596,7 @@ class Blocks extends React.Component {
                         vm={vm}
                         onCategorySelected={this.handleCategorySelected}
                         onRequestClose={onRequestCloseExtensionLibrary}
+                        assetHost={this.props.assetHost}
                     />
                 ) : null}
                 {customProceduresVisible ? (
@@ -645,7 +646,8 @@ Blocks.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     workspaceMetrics: PropTypes.shape({
         targets: PropTypes.objectOf(PropTypes.object)
-    })
+    }),
+    assetHost: PropTypes.string,
 };
 
 Blocks.defaultOptions = {

@@ -11,7 +11,7 @@ const prefersHighContrastQuery = '(prefers-contrast: more)';
 
 const systemPreferencesHOC = function (WrappedComponent) {
     class SystemPreferences extends React.Component {
-        componentDidMount () {
+        componentDidMount () {            
             this.preferencesListener = () => this.props.onSetTheme(detectTheme());
 
             if (window.matchMedia) {
@@ -40,10 +40,11 @@ const systemPreferencesHOC = function (WrappedComponent) {
             const {
                 /* eslint-disable no-unused-vars */
                 onSetTheme,
+                assetHost,
                 /* eslint-enable no-unused-vars */
                 ...props
             } = this.props;
-            return <WrappedComponent {...props} />;
+            return <WrappedComponent assetHost={assetHost} {...props} />;
         }
     }
 

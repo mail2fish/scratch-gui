@@ -12,7 +12,7 @@ import ConnectedIntlProvider from './connected-intl-provider.jsx';
  * @returns {React.Component} component with intl state provided from redux
  */
 const LocalizationHOC = function (WrappedComponent) {
-    class LocalizationWrapper extends React.Component {
+    class LocalizationWrapper extends React.Component {      
         componentDidUpdate (prevProps) {
             if (prevProps.locale !== this.props.locale) {
                 this.props.onSetLanguage(this.props.locale);

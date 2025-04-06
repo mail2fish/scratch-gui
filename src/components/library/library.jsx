@@ -211,6 +211,7 @@ class LibraryComponent extends React.Component {
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
             onSelect={this.handleSelect}
+            assetHost={this.props.assetHost}
         />);
     }
     renderData (data) {
@@ -332,7 +333,8 @@ LibraryComponent.propTypes = {
     setStopHandler: PropTypes.func,
     showPlayButton: PropTypes.bool,
     tags: PropTypes.arrayOf(PropTypes.shape(TagButton.propTypes)),
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    assetHost: PropTypes.string
 };
 
 LibraryComponent.defaultProps = {
