@@ -1,5 +1,5 @@
 import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -48,6 +48,9 @@ const messages = defineMessages({
 
 const modalWidth = 300;
 const calculateModalPosition = (relativeElemRef, modalPosition) => {
+    if (!relativeElemRef || !relativeElemRef.getBoundingClientRect) {
+        return {};
+    }
     const refPosition = relativeElemRef.getBoundingClientRect();
 
     if (modalPosition === 'left') {
@@ -87,25 +90,52 @@ const DeleteConfirmationPrompt = ({
     entityType,
     relativeElemRef
 }) => {
-    const modalPositionValues = calculateModalPosition(relativeElemRef, modalPosition);
+    // 判断是否为小屏幕
+    const [isSmallScreen, setIsSmallScreen] = useState(
+        typeof window !== 'undefined' && window.innerHeight <= 650
+    );
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsSmallScreen(window.innerHeight <= 650);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // 小屏幕时强制居中
+    const contentStyle = isSmallScreen
+        ? {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: modalWidth,
+            border: 'none',
+            height: 'fit-content',
+            backgroundColor: 'transparent',
+            padding: 0,
+            margin: 0,
+            position: 'fixed',
+            overflowX: 'hidden',
+            zIndex: 1000
+        }
+        : {
+            ...calculateModalPosition(relativeElemRef, modalPosition),
+            width: modalWidth,
+            border: 'none',
+            height: 'fit-content',
+            backgroundColor: 'transparent',
+            padding: 0,
+            margin: 0,
+            position: 'absolute',
+            overflowX: 'hidden',
+            zIndex: 1000
+        };
 
     return (<ReactModal
         isOpen
-        // We have to inline the styles, since a part
-        // of them are dynamically generated
         style={{
-            content: {
-                ...modalPositionValues,
-                width: modalWidth,
-                border: 'none',
-                height: 'fit-content',
-                backgroundColor: 'transparent',
-                padding: 0,
-                margin: 0,
-                position: 'absolute',
-                overflowX: 'hidden',
-                zIndex: 1000
-            },
+            content: contentStyle,
             overlay: {
                 position: 'fixed',
                 top: 0,
