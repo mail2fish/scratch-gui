@@ -54,7 +54,7 @@ export default function (projectId, vmState, params) {
                 return reject(e);
             }
             body.id = projectId;
-            if (creatingProject) {
+            if (body['content-name'] !== "") {
                 body.id = body['content-name'];
             }
             resolve(body);

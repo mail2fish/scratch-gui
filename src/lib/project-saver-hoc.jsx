@@ -253,6 +253,12 @@ const ProjectSaverHOC = function (WrappedComponent) {
                     if (id && this.props.onUpdateProjectThumbnail) {
                         this.storeProjectThumbnail(id);
                     }
+                    // 如果 id 和 projectId 不相同，则修改 url 中的 projectId
+                    console.log('id', id);
+                    console.log('projectId', projectId);
+                    if (id && id !== projectId) {
+                        window.history.replaceState({}, '', `/projects/scratch/open/${id}`);
+                    }
                     this.reportTelemetryEvent('projectDidSave');
                     return response;
                 })
