@@ -27,6 +27,7 @@ AccountNav.propTypes = {
     isEducator: PropTypes.bool,
     isRtl: PropTypes.bool,
     isStudent: PropTypes.bool,
+    myStuffUrl: PropTypes.string,
     profileUrl: PropTypes.string,
     thumbnailUrl: PropTypes.string,
     username: PropTypes.string

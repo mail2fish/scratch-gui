@@ -28,3 +28,4 @@ npm-*
 .secrets
 .env
 .vscode
+*.mdc

@@ -95,6 +95,7 @@ const GUIComponent = props => {
         isTotallyNormal,
         loading,
         logo,
+        myStuffUrl,
         renderLogin,
         onClickAbout,
         onClickAccountNav,
@@ -240,6 +241,7 @@ const GUIComponent = props => {
                     isShared={isShared}
                     isTotallyNormal={isTotallyNormal}
                     logo={logo}
+                    myStuffUrl={myStuffUrl}
                     renderLogin={renderLogin}
                     showComingSoon={showComingSoon}
                     onClickAbout={onClickAbout}
@@ -419,6 +421,7 @@ GUIComponent.propTypes = {
     isTotallyNormal: PropTypes.bool,
     loading: PropTypes.bool,
     logo: PropTypes.string,
+    myStuffUrl: PropTypes.string,
     onActivateCostumesTab: PropTypes.func,
     onActivateSoundsTab: PropTypes.func,
     onActivateTab: PropTypes.func,

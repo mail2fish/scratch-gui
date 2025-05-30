@@ -23,6 +23,80 @@ const handleTelemetryModalOptOut = () => {
     log('User opted out of telemetry');
 };
 
+// session reducer - 模拟 scratch-www 提供的
+const sessionReducer = (state = {
+    session: {
+        user: {
+            username: 'playgroundUser',
+            token: 'mock-token',
+            classroomId: '',
+            thumbnailUrl: null
+        }
+    },
+    permissions: {
+        educator: false,
+        student: false
+    }
+}, action) => {
+    switch (action.type) {
+        case 'SET_SESSION_USER':
+            return {
+                ...state,
+                session: {
+                    ...state.session,
+                    user: {
+                        ...state.session.user,
+                        ...action.payload
+                    }
+                }
+            };
+        case 'SET_SESSION_PERMISSIONS':
+            return {
+                ...state,
+                permissions: {
+                    ...state.permissions,
+                    ...action.payload
+                }
+            };
+        default:
+            return state;
+    }
+};
+
+// 创建带 session 的 AppStateHOC
+const AppStateHOCWithSession = (WrappedComponent) => {
+    const AppStateWithSession = AppStateHOC(
+        WrappedComponent,
+        false, // 不是 localesOnly
+        { session: sessionReducer }, // 额外的 reducers
+        { session: undefined } // 额外的初始状态
+    );
+    
+    // 简单包装，添加调试功能
+    class SessionWrapper extends React.Component {
+        componentDidMount() {
+            // AppStateHOC 已经暴露了 store，直接添加调试功能
+            setTimeout(() => {
+                if (window._reduxStore) {
+                    window.switchUser = (username) => {
+                        window._reduxStore.dispatch({
+                            type: 'SET_SESSION_USER',
+                            payload: { username }
+                        });
+                    };
+                    console.log('🎮 Playground session 已注入! 试试: window.switchUser("Alice")');
+                }
+            }, 100);
+        }
+        
+        render() {
+            return <AppStateWithSession {...this.props} />;
+        }
+    }
+    
+    return SessionWrapper;
+};
+
 /*
  * Render the GUI playground. This is a separate function because importing anything
  * that instantiates the VM causes unsupported browsers to crash
@@ -31,11 +105,9 @@ const handleTelemetryModalOptOut = () => {
 export default appTarget => {
     GUI.setAppElement(appTarget);
 
-    // note that redux's 'compose' function is just being used as a general utility to make
-    // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
-    // ability to compose reducers.
+    // 使用带 session 的 AppStateHOC
     const WrappedGui = compose(
-        AppStateHOC,
+        AppStateHOCWithSession,
         HashParserHOC
     )(GUI);
 
@@ -61,17 +133,14 @@ export default appTarget => {
         window.onbeforeunload = () => true;
     }
 
-
     ReactDOM.render(
-        // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!    
-            <WrappedGui  
-                canEditTitle
-                backpackVisible
-                showComingSoon
-                backpackHost={backpackHost}
-                canSave={true}
-                onClickLogo={onClickLogo}
-                assetHost="http://localhost:8080/assets/scratch"
-            />,
+        <WrappedGui  
+            canEditTitle
+            backpackVisible
+            backpackHost={backpackHost}
+            canSave={true}
+            onClickLogo={onClickLogo}
+            assetHost="http://localhost:8080/assets/scratch"
+        />,
         appTarget);
 };

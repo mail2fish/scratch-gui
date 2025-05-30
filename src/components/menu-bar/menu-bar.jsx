@@ -737,7 +737,7 @@ class MenuBar extends React.Component {
                         this.props.username ? (
                             // ************ user is logged in ************
                             <React.Fragment>
-                                <a href="/mystuff/">
+                                <a href={this.props.myStuffUrl || "/mystuff/"}>
                                     <div
                                         className={classNames(
                                             styles.menuBarItem,
@@ -760,6 +760,7 @@ class MenuBar extends React.Component {
                                     isOpen={this.props.accountMenuOpen}
                                     isRtl={this.props.isRtl}
                                     menuBarMenuClassName={classNames(styles.menuBarMenu)}
+                                    myStuffUrl={this.props.myStuffUrl}
                                     onClick={this.props.onClickAccount}
                                     onClose={this.props.onRequestCloseAccount}
                                     onLogOut={this.props.onLogOut}
@@ -944,7 +945,8 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     username: PropTypes.string,
     userOwnsProject: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    myStuffUrl: PropTypes.string
 };
 
 MenuBar.defaultProps = {

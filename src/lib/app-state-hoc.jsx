@@ -20,9 +20,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
  * @param {boolean} localesOnly - only provide the locale state, not everything
  *                      required by the GUI. Used to exclude excess state when
                         only rendering modals, not the GUI.
+ * @param {object} extraReducers - additional reducers to inject (e.g. session)
+ * @param {object} extraInitialState - additional initial state for extra reducers
  * @returns {React.Component} component with redux and intl state provided
  */
-const AppStateHOC = function (WrappedComponent, localesOnly) {
+const AppStateHOC = function (WrappedComponent, localesOnly, extraReducers = {}, extraInitialState = {}) {
     class AppStateWrapper extends React.Component {
         constructor (props) {
             super(props);
@@ -38,8 +40,14 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
             if (localesOnly) {
                 // Used for instantiating minimal state for the unsupported
                 // browser modal
-                reducers = {locales: localesReducer};
-                initialState = {locales: initializedLocales};
+                reducers = {
+                    locales: localesReducer,
+                    ...extraReducers // 合并额外的 reducers
+                };
+                initialState = {
+                    locales: initializedLocales,
+                    ...extraInitialState // 合并额外的初始状态
+                };
                 enhancer = composeEnhancers();
             } else {
                 // You are right, this is gross. But it's necessary to avoid
@@ -69,11 +77,13 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 reducers = {
                     locales: localesReducer,
                     scratchGui: guiReducer,
-                    scratchPaint: ScratchPaintReducer
+                    scratchPaint: ScratchPaintReducer,
+                    ...extraReducers // 合并额外的 reducers
                 };
                 initialState = {
                     locales: initializedLocales,
-                    scratchGui: initializedGui
+                    scratchGui: initializedGui,
+                    ...extraInitialState // 合并额外的初始状态
                 };
                 enhancer = composeEnhancers(guiMiddleware);
             }
@@ -83,6 +93,12 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 initialState,
                 enhancer
             );
+            
+            // 如果有额外的 reducers，说明是特殊用途（如 playground），暴露 store 到全局
+            if (Object.keys(extraReducers).length > 0) {
+                window._reduxStore = this.store;
+                console.log('🔧 AppStateHOC store 已暴露到 window._reduxStore');
+            }
         }
         componentDidUpdate (prevProps) {
             if (localesOnly) return;

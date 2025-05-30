@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 
 import MenuBarMenu from './menu-bar-menu.jsx';
 import {MenuSection} from '../menu/menu.jsx';
@@ -17,6 +18,13 @@ import dropdownCaret from './dropdown-caret.svg';
 
 import styles from './account-nav.css';
 
+const customMessages = {
+    'gui.accountMenu.myStuff': '我的作品',
+    'gui.accountMenu.profile': '个人信息',
+    'gui.accountMenu.accountSettings': '设置',
+    'gui.accountMenu.signOut': '退出'
+};
+
 const AccountNavComponent = ({
     className,
     classroomId,
@@ -25,6 +33,7 @@ const AccountNavComponent = ({
     isRtl,
     isStudent,
     menuBarMenuClassName,
+    myStuffUrl,
     onClick,
     onClose,
     onLogOut,
@@ -71,7 +80,7 @@ const AccountNavComponent = ({
                     id="gui.accountMenu.profile"
                 />
             </MenuItemContainer>
-            <MenuItemContainer href="/mystuff/">
+            <MenuItemContainer href={myStuffUrl}>
                 <FormattedMessage
                     defaultMessage="My Stuff"
                     description="Text to link to list of my projects, in the account navigation menu"
@@ -124,12 +133,17 @@ AccountNavComponent.propTypes = {
     isRtl: PropTypes.bool,
     isStudent: PropTypes.bool,
     menuBarMenuClassName: PropTypes.string,
+    myStuffUrl: PropTypes.string,
     onClick: PropTypes.func,
     onClose: PropTypes.func,
     onLogOut: PropTypes.func,
     profileUrl: PropTypes.string,
     thumbnailUrl: PropTypes.string,
     username: PropTypes.string
+};
+
+AccountNavComponent.defaultProps = {
+    myStuffUrl: '/mystuff/'
 };
 
 export default AccountNavComponent;
