@@ -18,13 +18,6 @@ import dropdownCaret from './dropdown-caret.svg';
 
 import styles from './account-nav.css';
 
-const customMessages = {
-    'gui.accountMenu.myStuff': '我的作品',
-    'gui.accountMenu.profile': '个人信息',
-    'gui.accountMenu.accountSettings': '设置',
-    'gui.accountMenu.signOut': '退出'
-};
-
 const AccountNavComponent = ({
     className,
     classroomId,
@@ -73,13 +66,13 @@ const AccountNavComponent = ({
             place={isRtl ? 'right' : 'left'}
             onRequestClose={onClose}
         >
-            <MenuItemContainer href={profileUrl}>
+            {/* <MenuItemContainer href={profileUrl}>
                 <FormattedMessage
                     defaultMessage="Profile"
                     description="Text to link to my user profile, in the account navigation menu"
                     id="gui.accountMenu.profile"
                 />
-            </MenuItemContainer>
+            </MenuItemContainer> */}
             <MenuItemContainer href={myStuffUrl}>
                 <FormattedMessage
                     defaultMessage="My Stuff"
@@ -87,7 +80,7 @@ const AccountNavComponent = ({
                     id="gui.accountMenu.myStuff"
                 />
             </MenuItemContainer>
-            {isEducator ? (
+            {/* {isEducator ? (
                 <MenuItemContainer href="/educators/classes/">
                     <FormattedMessage
                         defaultMessage="My Classes"
@@ -119,8 +112,8 @@ const AccountNavComponent = ({
                         description="Text to link to sign out, in the account navigation menu"
                         id="gui.accountMenu.signOut"
                     />
-                </MenuItemContainer>
-            </MenuSection>
+                </MenuItemContainer> 
+            </MenuSection>*/}
         </MenuBarMenu>
     </React.Fragment>
 );
