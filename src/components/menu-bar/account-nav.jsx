@@ -73,7 +73,15 @@ const AccountNavComponent = ({
                     id="gui.accountMenu.profile"
                 />
             </MenuItemContainer> */}
-            <MenuItemContainer href={myStuffUrl}>
+            <MenuItemContainer onClick={() => {
+                // 如果有上一页历史记录，则返回
+                if (window.history.length > 1 && document.referrer) {
+                    window.history.back();
+                } else {
+                    // 否则跳转到 myStuffUrl
+                    window.location.href = myStuffUrl || '/mystuff/';
+                }
+            }}>
                 <FormattedMessage
                     defaultMessage="My Stuff"
                     description="Text to link to list of my projects, in the account navigation menu"
