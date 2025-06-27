@@ -737,20 +737,26 @@ class MenuBar extends React.Component {
                         this.props.username ? (
                             // ************ user is logged in ************
                             <React.Fragment>
-                                <a href={this.props.myStuffUrl || "/mystuff/"}>
-                                    <div
-                                        className={classNames(
-                                            styles.menuBarItem,
-                                            styles.hoverable,
-                                            styles.mystuffButton
-                                        )}
-                                    >
-                                        <img
-                                            className={styles.mystuffIcon}
-                                            src={mystuffIcon}
-                                        />
-                                    </div>
-                                </a>
+                                <div
+                                    className={classNames(
+                                        styles.menuBarItem,
+                                        styles.hoverable,
+                                        styles.mystuffButton
+                                    )}
+                                    onClick={() => {
+                                        if (window.history && window.history.length > 1) {
+                                            window.history.back();
+                                        } else {
+                                            window.location.href = this.props.myStuffUrl || "/mystuff/";
+                                        }
+                                    }}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <img
+                                        className={styles.mystuffIcon}
+                                        src={mystuffIcon}
+                                    />
+                                </div>
                                 <AccountNav
                                     className={classNames(
                                         styles.menuBarItem,
